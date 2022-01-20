@@ -9,6 +9,8 @@ import { Region } from 'src/app/shared/models/region';
 })
 export class PartnerListComponent implements OnInit {
   @Input() selectedRegion: Region | string;
+  @Input() partnerInstance: IPartner | null;
+
   selectedPartners: IPartner[];
   partners: IPartner[] = [
     { id: 1, region: Region.Europe, country: "Germany", name: "Assyst GmbH", imageUrl: "assyst.jpg", websiteUrl: "http://www.human-solutions.com" },
@@ -35,34 +37,38 @@ export class PartnerListComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     console.log('ngOnChanges called!');
     console.log(changes);
-
+    if (this.partnerInstance != null) {
+      this.partners.push(this.partnerInstance);
+      console.log("NEW INSTANCE = " + this.partnerInstance.country);
+      this.partnerInstance = null;
+    }
     if (this.selectedRegion === undefined || this.selectedRegion === 'All')
       this.selectedPartners = this.partners;
     else
       this.selectedPartners = this.partners.filter(p => p.region.toString() === this.selectedRegion);
   }
 
-  ngDoCheck() {
-    console.log('ngDoCheck called!');
-  }
+  // ngDoCheck() {
+  //   console.log('ngDoCheck called!');
+  // }
 
-  ngAfterContentInit() {
-    console.log('ngAfterContentInit called!');
-  }
+  // ngAfterContentInit() {
+  //   console.log('ngAfterContentInit called!');
+  // }
 
-  ngAfterContentChecked() {
-    console.log('ngAfterContentChecked called!');
-  }
+  // ngAfterContentChecked() {
+  //   console.log('ngAfterContentChecked called!');
+  // }
 
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit called!');
-  }
+  // ngAfterViewInit() {
+  //   console.log('ngAfterViewInit called!');
+  // }
 
-  ngAfterViewChecked() {
-    console.log('ngAfterViewChecked called!');
-  }
+  // ngAfterViewChecked() {
+  //   console.log('ngAfterViewChecked called!');
+  // }
 
-  ngOnDestroy() {
-    console.log('ngOnDestroy called!');
-  }
+  // ngOnDestroy() {
+  //   console.log('ngOnDestroy called!');
+  // }
 }
