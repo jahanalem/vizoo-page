@@ -11,9 +11,9 @@
         <div class="menu-page menu-page--center">
             <button (click)="setRegion('All')" [ngClass]="{'mixitup-control-active': currentRegion==='All'}"><span>All
                     Resellers</span></button>
-            <button *ngFor="let enum of regions | keyvalue" (click)="setRegion(enum.value)"
-                [ngClass]="{'mixitup-control-active': currentRegion===enum.value}"><span>{{enum.value}}</span></button>
-           
+            <button *ngFor="let rgn of regions | keyvalue" (click)="setRegion(rgn.value)"
+                [ngClass]="{'mixitup-control-active': currentRegion===rgn.value}"><span>{{rgn.value}}</span></button>
+
         </div>
 
         <app-partner-list [partnerInstance]="partnerInstance" [selectedRegion]="currentRegion"></app-partner-list>
