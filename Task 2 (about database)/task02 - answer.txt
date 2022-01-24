@@ -1,0 +1,34 @@
+SELECT 
+		physx.name as name, 
+		material.name as type, 
+		construction.name as construction,
+		STRING_AGG((cmpPart.ration || '%') || ' ' || cmp.name,',') as composition, 
+		physx.weight || ' g/m²', 
+		tag.name as tags
+FROM 
+		t_physx as physx 
+INNER JOIN t_material as material 
+    ON physx.material_id= material.id
+INNER JOIN t_construction as construction
+	ON physx.construction_id = construction.id
+INNER JOIN t_tags_mapping as tm
+	ON physx.id = tm.physx_id
+INNER JOIN t_tag as tag
+	ON tm.tags_id = tag.id
+INNER JOIN t_composition_part as cmpPart
+	ON cmpPart.physx_id = physx.id
+INNER JOIN t_composition as cmp
+	ON cmpPart.composition_id = cmp.id
+WHERE material.name = 'Knit' 
+	OR physx.name = '???'
+	OR construction.name = '???'
+	OR physx.weight = '000'
+	OR cmpPart.ration = '000'
+	Or cmp.name = '???'
+	OR tag.name = '???'
+GROUP BY 
+	physx.name, material.name, construction.name, physx.weight, tag.name
+	
+	
+	
+	
