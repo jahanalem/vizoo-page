@@ -19,13 +19,13 @@ INNER JOIN t_composition_part as cmpPart
 	ON cmpPart.physx_id = physx.id
 INNER JOIN t_composition as cmp
 	ON cmpPart.composition_id = cmp.id
-WHERE material.name = 'Knit' 
-	OR physx.name = '???'
-	OR construction.name = '???'
+WHERE LOWER(material.name) LIKE LOWER('%kn%')
+	OR LOWER(physx.name) LIKE LOWER('%???%')
+	OR LOWER(construction.name) LIKE LOWER('%???%')
 	OR physx.weight = '000'
 	OR cmpPart.ration = '000'
-	Or cmp.name = '???'
-	OR tag.name = '???'
+	Or LOWER(cmp.name) LIKE LOWER('%???%')
+	OR LOWER(tag.name) LIKE LOWER('%???%')
 GROUP BY 
 	physx.name, material.name, construction.name, physx.weight, tag.name
 	
