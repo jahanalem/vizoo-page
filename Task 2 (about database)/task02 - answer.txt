@@ -2,19 +2,19 @@ SELECT
 		physx.name as name, 
 		material.name as type, 
 		construction.name as construction,
-		STRING_AGG((cmpPart.ration || '%') || ' ' || cmp.name,',') as composition, 
+		STRING_AGG(distinct (cmpPart.ration || '%') || ' ' || cmp.name,',') as composition, 
 		physx.weight || ' g/m²', 
-		tag.name as tags
+		STRING_AGG(tag.name, ',') as tags
 FROM 
 		t_physx as physx 
-INNER JOIN t_material as material 
-    ON physx.material_id= material.id
-INNER JOIN t_construction as construction
-	ON physx.construction_id = construction.id
 INNER JOIN t_tags_mapping as tm
 	ON physx.id = tm.physx_id
 INNER JOIN t_tag as tag
 	ON tm.tags_id = tag.id
+INNER JOIN t_material as material 
+    ON physx.material_id= material.id
+INNER JOIN t_construction as construction
+	ON physx.construction_id = construction.id
 INNER JOIN t_composition_part as cmpPart
 	ON cmpPart.physx_id = physx.id
 INNER JOIN t_composition as cmp
@@ -24,11 +24,7 @@ WHERE LOWER(material.name) LIKE LOWER('%kn%')
 	OR LOWER(construction.name) LIKE LOWER('%???%')
 	OR physx.weight = '000'
 	OR cmpPart.ration = '000'
-	Or LOWER(cmp.name) LIKE LOWER('%???%')
+	OR LOWER(cmp.name) LIKE LOWER('%???%')
 	OR LOWER(tag.name) LIKE LOWER('%???%')
 GROUP BY 
-	physx.name, material.name, construction.name, physx.weight, tag.name
-	
-	
-	
-	
+	 cmp.name, physx.name, material.name, construction.name, physx.weight
